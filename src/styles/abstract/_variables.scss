@@ -1,0 +1,15 @@
+$square-side: 25px;
+
+@mixin squareSize{
+  height: $square-side;
+  width: $square-side;
+}
+
+$tetris-container-height: calc($square-side * 18);
+$tetris-container-width: calc($square-side * 10);
+
+@mixin tetrisContainerSize{
+  height: $tetris-container-height;
+  width: $tetris-container-width;
+}
+
