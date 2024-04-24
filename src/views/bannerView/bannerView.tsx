@@ -1,16 +1,20 @@
 import reactLogo from '../../assets/react.svg'
+import './bannerView.css'
 
 export default function BannerView() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+  
   return(
-  <>
-    <div>
+  <div className='banner'>
       <a href="https://react.dev" target="_blank">
         <img src={reactLogo} className="logo react" alt="React logo" />
       </a>
-    </div>
+    
     <h1>Tetris</h1>
 
-    <button> Start </button>
-  </>
+    <button onClick={handleClick}> Start </button>
+  </div>
   )
 }

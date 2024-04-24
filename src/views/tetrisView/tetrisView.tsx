@@ -5,7 +5,7 @@ export default function TetrisView(){
   return(
     <>
       <div className='tetris'>
-        <TetrisBox/>
+        <TetrisBox(pieces)/>
       </div>
     </>
   )

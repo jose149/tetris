@@ -1,12 +1,12 @@
-// import BannerView from './views/bannerView/bannerView'
+import BannerView from './views/bannerView/bannerView'
 import TetrisView from './views/tetrisView/tetrisView'
 import './App.css'
 
 function App() {
   return (
     <>
-      {/* <BannerView/> */}
-      <TetrisView/>
+      <BannerView/>
+      {/* <TetrisView/> */}
     </>
   )
 }

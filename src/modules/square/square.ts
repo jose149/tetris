@@ -1,14 +1,8 @@
-export interface Coordinates{
-  x: number;
-  y: number;
-}
-export class square {
+import type { Piece, Position } from "../pieces/piece";
 
-  constructor(public side:number, public position: Coordinates){
-  }
+export class Square implemets Piece {
 
-  public translate(x:number, y:number): void{
-    this.position.x += x;
-    this.position.y += y;
+  constructor(position: Position){
+    this = new Piece([[1,1,1,1]],position)
   }
 }
