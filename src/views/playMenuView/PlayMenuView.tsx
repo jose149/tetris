@@ -1,6 +1,6 @@
 import { AppButtonConfig } from "../../components/button";
 import { AppButton } from "../../components/button/Button";
-import "./playMenu.css";
+import "./playMenuView.css";
 
 export default function PlayMenu() {
   function openPlayMenu(): void {
