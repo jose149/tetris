@@ -1,0 +1,28 @@
+.button {
+  /* Default button styles */
+  width: 100%;
+  height: 100%;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: #181818; /* Blue */
+  color: #eaeaea; /* White */
+}
+
+.secondary {
+  background-color: #6c757d; /* Gray */
+  color: #ffffff; /* White */
+}
+
+.tertiary {
+  background-color: #28a745; /* Green */
+  color: #ffffff; /* White */
+}
+
+.left {
+  text-align: start;
+}
