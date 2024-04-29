@@ -1,5 +1,5 @@
 import BannerView from "./views/bannerView/BannerView";
-import PlayMenu from "./views/playMenu/PlayMenu";
+import PlayMenuView from "./views/playMenuView/PlayMenuView";
 import "./App.css";
 import { AppEventType, AppEvents, TetrioView } from "./app.model";
 import { useState } from "react";
@@ -30,7 +30,7 @@ function App() {
       case TetrioView.Banner:
         return <BannerView onHandleAppEvent={onHandleAppEvent} />;
       case TetrioView.PlayMenu:
-        return <PlayMenu />;
+        return <PlayMenuView />;
       case TetrioView.Game:
         return <BannerView onHandleAppEvent={onHandleAppEvent} />;
 
