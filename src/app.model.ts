@@ -5,7 +5,11 @@ export enum TetrioView{
 }
 
 export interface BannerConfig{
-  onHandleAppEvent: (action: AppEvents) => void
+  onChangeView: (action: ChangeViewEvent) => void
+}
+
+export interface PlayMenuConfig{
+  onChangeView: (action: ChangeViewEvent) => void
 }
 
 export enum AppEventType {

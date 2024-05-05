@@ -1,12 +1,10 @@
-import './tetrisStyles.scss'
-import TetrisBox from '../../components/tetrisBox/tetrisBox'
+import "./tetrisStyles.scss";
+import TetrisBox from "../../components/tetrisBox/tetrisBox";
 
-export default function TetrisView(){
-  return(
+export default function TetrisView() {
+  return (
     <>
-      <div className='tetris'>
-        <TetrisBox(pieces)/>
-      </div>
+      <div className="tetris"></div>
     </>
-  )
+  );
 }

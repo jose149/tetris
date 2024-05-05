@@ -9,28 +9,15 @@ import { AppButton } from "../../components/button/Button";
 import "./bannerView.css";
 
 export default function BannerView(props: BannerConfig) {
-  function openPlayMenu(): void {
-    alert("open game menu");
-  }
-
   const openPlayMenuDataEvent: ChangeViewEvent = {
     eventType: AppEventType.ChangeView,
     view: TetrioView.PlayMenu,
   };
 
-  const openGameDataEvent: ChangeViewEvent = {
-    eventType: AppEventType.ChangeView,
-    view: TetrioView.Game,
-  };
-
   const bannerButtons: AppButtonConfig[] = [
     {
       text: "Start",
-      onClick: () => props.onHandleAppEvent(openPlayMenuDataEvent),
-    },
-    {
-      text: "Back to banner",
-      onClick: () => props.onHandleAppEvent(openGameDataEvent),
+      onClick: () => props.onChangeView(openPlayMenuDataEvent),
     },
   ];
 

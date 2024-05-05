@@ -1,5 +1,6 @@
 import BannerView from "./views/bannerView/BannerView";
 import PlayMenuView from "./views/playMenuView/PlayMenuView";
+import TetrisView from "./views/tetrisView/tetrisView";
 import "./App.css";
 import { AppEventType, AppEvents, TetrioView } from "./app.model";
 import { useState } from "react";
@@ -28,22 +29,17 @@ function App() {
   function CurrentView(currentView: TetrioView) {
     switch (currentView) {
       case TetrioView.Banner:
-        return <BannerView onHandleAppEvent={onHandleAppEvent} />;
+        return <BannerView onChangeView={onHandleAppEvent} />;
       case TetrioView.PlayMenu:
-        return <PlayMenuView />;
+        return <PlayMenuView onChangeView={onHandleAppEvent} />;
       case TetrioView.Game:
-        return <BannerView onHandleAppEvent={onHandleAppEvent} />;
+        return <TetrisView />;
 
       default:
         break;
     }
   }
-  return (
-    <>
-      {CurrentView(currentView)}
-      {/* <TetrisView/> */}
-    </>
-  );
+  return <>{CurrentView(currentView)}</>;
 }
 
 export default App;
