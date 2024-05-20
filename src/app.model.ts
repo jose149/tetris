@@ -1,7 +1,7 @@
 export enum TetrioView{
-  Banner = 'banner',
-  PlayMenu = 'playMenu',
-  Game = 'game'
+  Menu = 'menu',
+  Game = 'game',
+  ConfigurationMenu = 'configurationMenu',
 }
 
 export interface BannerConfig{

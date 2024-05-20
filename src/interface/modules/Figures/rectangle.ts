@@ -1,4 +1,4 @@
-import { Piece, Position } from "./piece";
+import { Piece, Position } from "./figure";
 
 export class Rectangle implements Piece {
 

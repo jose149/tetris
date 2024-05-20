@@ -1,4 +1,4 @@
-import type { Piece, Position } from "../pieces/piece";
+import type { Piece, Position } from "../Figures/figure";
 
 export class Square implemets Piece {
 

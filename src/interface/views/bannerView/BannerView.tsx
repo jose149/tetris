@@ -3,9 +3,9 @@ import {
   BannerConfig,
   ChangeViewEvent,
   TetrioView,
-} from "../../app.model";
-import { AppButtonConfig } from "../../components/button";
-import { AppButton } from "../../components/button/Button";
+} from "../../../app.model";
+import { AppButtonConfig } from "../../libraries/components/button";
+import { AppButton } from "../../libraries/components/button/Button";
 import "./bannerView.css";
 
 export default function BannerView(props: BannerConfig) {

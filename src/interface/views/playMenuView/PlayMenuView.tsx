@@ -1,11 +1,11 @@
-import { AppButtonConfig } from "../../components/button";
-import { AppButton } from "../../components/button/Button";
+import { AppButtonConfig } from "../../libraries/components/button";
+import { AppButton } from "../../libraries/components/button/Button";
 import {
   AppEventType,
   PlayMenuConfig,
   ChangeViewEvent,
   TetrioView,
-} from "../../app.model";
+} from "../../../app.model";
 import "./playMenuView.css";
 
 export default function PlayMenu(props: PlayMenuConfig) {
