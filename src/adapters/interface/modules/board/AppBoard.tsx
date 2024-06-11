@@ -1,8 +1,18 @@
 import { useState } from "react";
 import "./appBoardStyle.scss";
 
+interface Figure{
+  space: number[][];
+  position: {
+    row: number;
+     col: number;
+  };
+}
+
+type Matrix = number[][]
+
 export default function AppBoard() {
-  const DEFAULT_BOARD = [
+  const DEFAULT_BOARD_MATRIX = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -11,7 +21,7 @@ export default function AppBoard() {
     [1, 1, 1, 1],
   ];
 
-  const [currentBoard, setCurrentBoard] = useState(DEFAULT_BOARD);
+  const [currentBoardMatrix, setCurrentBoardMatrix] = useState(DEFAULT_BOARD_MATRIX);
 
   const defaultFigure1 = {
     space: [
@@ -21,48 +31,56 @@ export default function AppBoard() {
     position: { row: 0, col: 1 },
   };
 
-  const [currentFigure1, setCurrentFigure1] = useState(defaultFigure1);
+  const [currentFigure1, setCurrentFigure] = useState(defaultFigure1);
 
-  const defaultCells = currentBoard.map((row) => {
-    return row.map((col) => (
-      <div
-        className={`app-board-space ${col ? "selected" : ""}`}
-        key={`${col}${row}${col ? "selected" : ""}`}
-      ></div>
-    ));
-  });
+  const defaultCells = parseMatrixToHTMLElements(currentBoardMatrix)
+
+  function parseMatrixToHTMLElements(matrix: Matrix):JSX.Element[][]{
+    return matrix.map((rowValue, rowIndex) => {
+      return rowValue.map((colValue, colIndex) => {
+        console.log('row: ',rowIndex, 'col: ', colIndex);
+        return (
+          <div
+            className={`app-board-space${colValue ? " selected" : ""}`}
+            key={`${colIndex}${rowIndex}`}
+          ></div>
+        )
+      } );
+    });
+  }
+  console.log('defaultCells: ', defaultCells)
 
   const [currentCells, setCurrentCells] = useState(defaultCells);
 
-  // function addFigure1ToExistingBoard() {
-  //   const newBoard = DEFAULT_BOARD;
-  //   for (let i = 0; i < currentFigure1.space.length; i++) {
-  //     for (let j = 0; j < currentFigure1.space[0].length; j++) {
-  //       newBoard[currentFigure1.position.row + i][
-  //         currentFigure1.position.col + j
-  //       ] = currentFigure1.space[i][j];
-  //     }
-  //   }
-  //   setCurrentBoard(newBoard);
-  //   const newCells = currentBoard.map((row) =>
-  //     row.map((col) => (
-  //       <div className={`app-board-space ${col ? "selected" : ""}`}></div>
-  //     )),
-  //   );
-  //   setCurrentCells(newCells);
-  // }
+  function addFigureToBoardMatrix(figure:Figure, matrix: Matrix ): Matrix{
+    const currentMatrix = matrix;
+
+    for (let row = 0; row < figure.space.length; row++) {
+      for (let col = 0; col < figure.space[0].length; col++) {
+        currentMatrix[figure.position.row + row][
+          figure.position.col + col
+        ] = figure.space[row][col];
+      }
+    }
+
+    return currentMatrix
+  }
+
+  function addFigure1ToExistingBoard() {
+    const newBoardMatrix = addFigureToBoardMatrix(currentFigure1, DEFAULT_BOARD_MATRIX)
+    setCurrentBoardMatrix(newBoardMatrix);
+    setCurrentCells(parseMatrixToHTMLElements(currentBoardMatrix))
+  }
 
   // function dropFigure1() {
   //   const newFigure1 = currentFigure1;
   //   newFigure1.position.row = +1;
 
-  //   console.log(newFigure1);
-
   //   setCurrentFigure1(newFigure1);
   //   addFigure1ToExistingBoard();
   // }
 
-  // setTimeout(addFigure1ToExistingBoard, 1000);
+  // setTimeout(addFigure1ToExistingBoard, 3000);
   // setTimeout(dropFigure1, 2000);
 
   return (
