@@ -1,6 +1,6 @@
 import { GameState } from '../entities/gameState';
 
-export class MoveTetromino {
+export class MoveFigure {
     gameState: GameState;
 
     constructor(gameState: GameState) {

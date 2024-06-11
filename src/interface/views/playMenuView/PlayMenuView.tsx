@@ -14,25 +14,25 @@ export default function PlayMenu(props: PlayMenuConfig) {
     view: TetrioView.Game,
   };
 
-  const openBannerEvent: ChangeViewEvent = {
-    eventType: AppEventType.ChangeView,
-    view: TetrioView.Banner,
-  };
+  // const openBannerEvent: ChangeViewEvent = {
+  //   eventType: AppEventType.ChangeView,
+  //   view: TetrioView.Menu,
+  // };
 
   const bannerButtons: AppButtonConfig[] = [
     { text: "1P Solo", onClick: () => props.onChangeView(openTetrioEvent) },
     {
       text: "MP Multiplayer",
-      onClick: () => props.onChangeView(openBannerEvent),
+      onClick: () => {},
     },
     {
       text: "Tetra channel",
-      onClick: () => props.onChangeView(openBannerEvent),
+      onClick: () => {},
     },
-    { text: "Config", onClick: () => props.onChangeView(openBannerEvent) },
+    { text: "Config", onClick: () => {} },
     {
       text: "Back to banner",
-      onClick: () => props.onChangeView(openBannerEvent),
+      onClick: () => {},
     },
   ];
 

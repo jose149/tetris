@@ -1,0 +1,18 @@
+  .app-board{
+    height: 600px;
+    width: 400px;
+    background:grey;
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(6, 100px);
+  
+    &-space{
+      background-color: lightblue; /* Background color of grid items */
+      border: 1px solid blue; /* Border around grid items */
+      text-align: center; /* Center text within grid items */
+      line-height: 100px; /* Vertical centering */
+      &.selected{
+        background-color:red;
+      }
+    }
+  }
