@@ -1,22 +1,51 @@
 import { Figure } from "./figure";
+export interface FigureConfig{
+    shape: Matrix;
+    position:Position;
+}
+  
+export type Matrix = (number | null)[][]
+export type Position = { x: number; y: number };
 
 export class Board {
-  width: number;
-  height: number;
-  grid: (number | null)[][];
+  private currentBoardMatrix: Matrix;
+  private currentFigure?: Figure = undefined
 
-  constructor(width: number, height: number) {
-      this.width = width;
-      this.height = height;
-      this.grid = Array.from({ length: height }, () => Array(width).fill(null));
+  constructor(height: number, width: number) {
+      this.currentBoardMatrix = this.createEmptyMatrix(height, width);
   }
 
-  canPlaceFigure(figure: Figure): boolean {
+  get boardMatrix():Matrix{
+    return this.currentBoardMatrix
+  }
+
+  public canPlaceFigure(figure: FigureConfig): boolean {
       // Logic to check if Tetromino can be placed on the grid
       return true;
   }
 
-  placeFigure(figure: Figure): void {
-      // Logic to place Tetromino on the grid
+  public setFigure(figure:FigureConfig):void {
+    this.currentFigure = new Figure(figure.shape, figure.position)
+    this.currentBoardMatrix = this.addFigureToMatrix(this.currentFigure, this.currentBoardMatrix)
   }
+
+  private createEmptyMatrix(rowsNumber:number, colsNumber:number):Matrix{
+    return Array(rowsNumber).fill(Array(colsNumber).fill(0))
+  }
+
+  private addFigureToMatrix(figure:Figure, matrix: Matrix ): Matrix{
+    const currentMatrix = matrix;
+
+    for (let row = 0; row < figure.shape.length; row++) {
+      for (let col = 0; col < figure.shape[0].length; col++) {
+        currentMatrix[figure.position.y + row][
+          figure.position.x + col
+        ] = figure.shape[row][col];
+      }
+    }
+
+    return currentMatrix
+  }
+
+  
 }

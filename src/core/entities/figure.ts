@@ -1,9 +1,27 @@
-export class Figure {
-  shape: number[][];
-  position: { x: number; y: number };
+import { Matrix, Position } from "./board";
 
-  constructor(shape: number[][], position: { x: number; y: number }) {
+export class Figure {
+  public shape: Matrix;
+  public currentPosition: Position;
+
+  constructor(shape: Matrix, position: Position) {
       this.shape = shape;
-      this.position = position;
+      this.currentPosition = position;
   }
+
+  get shapeMatrix(): Matrix{
+    return this.shape;
+  }
+
+  get position(): Position{
+    return this.currentPosition;
+  }
+
+  // function dropFigure1() {
+  //   const newFigure1 = currentFigure1;
+  //   newFigure1.position.row = +1;
+
+  //   setCurrentFigure1(newFigure1);
+  //   addFigure1ToExistingBoard();
+  // }
 }
