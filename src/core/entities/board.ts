@@ -19,10 +19,10 @@ export class Board {
     return this.currentBoardMatrix
   }
 
-  public canPlaceFigure(figure: FigureConfig): boolean {
-      // Logic to check if Tetromino can be placed on the grid
-      return true;
-  }
+  // public canPlaceFigure(figure: FigureConfig): boolean {
+  //     // Logic to check if Tetromino can be placed on the grid
+  //     return true;
+  // }
 
   public setFigure(figure:FigureConfig):void {
     this.currentFigure = new Figure(figure.shape, figure.position)
@@ -30,20 +30,23 @@ export class Board {
   }
 
   private createEmptyMatrix(rowsNumber:number, colsNumber:number):Matrix{
-    return Array(rowsNumber).fill(Array(colsNumber).fill(0))
+    return Array(rowsNumber).fill(Array(colsNumber).fill(null))
   }
 
   private addFigureToMatrix(figure:Figure, matrix: Matrix ): Matrix{
-    const currentMatrix = matrix;
-
+    console.log(JSON.stringify(figure), JSON.stringify(matrix))
+    const currentMatrix = matrix.map(row => [...row]);
+    console.log(JSON.stringify(currentMatrix))
     for (let row = 0; row < figure.shape.length; row++) {
       for (let col = 0; col < figure.shape[0].length; col++) {
+        console.log('position in matrix: ', ' Y: ', figure.position.y + row, ' X: ', figure.position.x + col, ' result: ', figure.shape[row][col]? 1: null)
         currentMatrix[figure.position.y + row][
           figure.position.x + col
-        ] = figure.shape[row][col];
+        ] = figure.shape[row][col]? 1: null;
+        console.log(JSON.stringify(currentMatrix))
       }
     }
-
+    
     return currentMatrix
   }
 

@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Board, FigureConfig } from "../../../../core/entities/board";
 import "./appBoardStyle.scss";
 
+export interface Size{
+  height: number;
+  width: number;
+}
 
-
-export default function AppBoard() {
-  const currentBoard = new Board(6,4)
+export default function AppBoard(size: Size) {
+  const currentBoard = new Board(size.height,size.width)
   const [currentBoardMatrix, setCurrentBoardMatrix] = useState(printBoardMatrix());
+
+  useEffect(() => {
+    const timeoutId = setTimeout(setFigure, 3000);
+
+    // Clean up the timeout if the component unmounts
+    return () => clearTimeout(timeoutId);
+  }, []); // Empty dependency array ensures this runs only once after the initial render
+
   
   function printBoardMatrix():JSX.Element[][]{
     return currentBoard.boardMatrix.map((rowValue, rowIndex) => {
@@ -36,8 +47,6 @@ export default function AppBoard() {
     currentBoard.setFigure(figure1)
     setCurrentBoardMatrix(printBoardMatrix())
   }
-
-  setTimeout(setFigure, 3000);
 
   return (
     <>
