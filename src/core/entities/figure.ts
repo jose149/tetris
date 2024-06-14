@@ -1,27 +1,25 @@
 import { Matrix, Position } from "./board";
 
 export class Figure {
-  public shape: Matrix;
-  public currentPosition: Position;
+  private currentShape: Matrix;
+  private currentPosition: Position;
 
   constructor(shape: Matrix, position: Position) {
-      this.shape = shape;
+      this.currentShape = shape;
       this.currentPosition = position;
   }
 
-  get shapeMatrix(): Matrix{
-    return this.shape;
+  get shape(): Matrix{
+    return this.currentShape;
   }
 
   get position(): Position{
     return this.currentPosition;
   }
 
-  // function dropFigure1() {
-  //   const newFigure1 = currentFigure1;
-  //   newFigure1.position.row = +1;
-
-  //   setCurrentFigure1(newFigure1);
-  //   addFigure1ToExistingBoard();
-  // }
+  public drop():void {
+    this.currentPosition.y = this.currentPosition.y + 1;
+    // setCurrentFigure1(newFigure1);
+    // addFigure1ToExistingBoard();
+  }
 }

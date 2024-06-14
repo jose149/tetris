@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Board, FigureConfig } from "../../../../core/entities/board";
+import { Board, FigureConfig, Matrix } from "../../../../core/entities/board";
 import "./appBoardStyle.scss";
 
 export interface Size{
@@ -8,19 +8,28 @@ export interface Size{
 }
 
 export default function AppBoard(size: Size) {
-  const currentBoard = new Board(size.height,size.width)
-  const [currentBoardMatrix, setCurrentBoardMatrix] = useState(printBoardMatrix());
+  const [tetrisBoard] = useState(new Board(size.height,size.width))
+  const [boardMatrix, setBoardMatrix] = useState(tetrisBoard.boardMatrix);
+  const [printedTetrisBoard, setPrintedTetrisBoard] = useState<JSX.Element[][]>()
 
   useEffect(() => {
-    const timeoutId = setTimeout(setFigure, 3000);
+    console.log('useEffect')
+    const timeoutId = setTimeout(()=>{
+      setFigure();
+      setBoardMatrix(tetrisBoard.boardMatrix);
+    }, 500);
 
     // Clean up the timeout if the component unmounts
     return () => clearTimeout(timeoutId);
   }, []); // Empty dependency array ensures this runs only once after the initial render
 
+  useEffect(() => {
+    console.log('tetrisBoard.boardMatrix triggered: ', tetrisBoard.boardMatrix)
+    setPrintedTetrisBoard(printBoardMatrix(boardMatrix))
+  }, [boardMatrix]); 
   
-  function printBoardMatrix():JSX.Element[][]{
-    return currentBoard.boardMatrix.map((rowValue, rowIndex) => {
+  function printBoardMatrix(matrix:Matrix):JSX.Element[][]{
+    return matrix.map((rowValue, rowIndex) => {
       return rowValue.map((colValue, colIndex) => {
         return (
           <div
@@ -44,13 +53,26 @@ export default function AppBoard(size: Size) {
 
   function setFigure():void {
     const figure1 = createFigure1()
-    currentBoard.setFigure(figure1)
-    setCurrentBoardMatrix(printBoardMatrix())
+    tetrisBoard.setFigure(figure1)
+    setDropFigure()
+  }
+
+  function setDropFigure(){
+    setTimeout(() => {
+      tetrisBoard.dropCurrentFigure()
+      console.log('figurePosition: ', tetrisBoard.figurePosition)
+      
+      setBoardMatrix(tetrisBoard.boardMatrix)
+
+      if(tetrisBoard.figurePosition && tetrisBoard.figurePosition.y < (size.height - 2)){
+        setDropFigure()
+      }
+    }, 500)
   }
 
   return (
     <>
-      <div className="app-board">{currentBoardMatrix}</div>
+      <div className="app-board">{printedTetrisBoard}</div>
     </>
   );
 }
