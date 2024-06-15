@@ -14,10 +14,7 @@ export default function AppBoard(size: Size) {
 
   useEffect(() => {
     const timeoutId = setTimeout(()=>{
-      console.log('board before adding a figure: ',JSON.stringify(tetrisBoard.boardMatrix))
       addFigure(fakeFigure1);
-      console.log('board after adding a figure: ',JSON.stringify(tetrisBoard.boardMatrix))
-      setBoardMatrix(tetrisBoard.boardMatrix);
     }, 500);
 
     // Clean up the timeout if the component unmounts
@@ -26,6 +23,7 @@ export default function AppBoard(size: Size) {
   
   function addFigure(figure:FigureConfig):void {
     tetrisBoard.addFigure(figure)
+    setBoardMatrix(tetrisBoard.boardMatrix);
     setDropFigure()
   }
 
@@ -38,7 +36,7 @@ export default function AppBoard(size: Size) {
       if(tetrisBoard.figurePosition && tetrisBoard.figurePosition.y < (size.height - fakeFigure1.shape.length)){
         setDropFigure()
       }else{
-        // addFigure(fakeFigure1)
+        addFigure(fakeFigure1)
       }
     }, 500)
   }
