@@ -30,10 +30,10 @@ export class Board {
   //     return true;
   // }
 
-  public setFigure(figure:FigureConfig):void {
+  public addFigure(figure:FigureConfig):void {
     this.boardMatrixSnapshot = this.currentBoardMatrix;
     this.currentFigure = new Figure(figure.shape, figure.position)
-    this.currentBoardMatrix = this.addFigureToMatrix(this.currentFigure, this.currentBoardMatrix)
+    this.currentBoardMatrix = this.addFigureToBoard(this.currentFigure)
   }
 
   public dropCurrentFigure(): void {
@@ -41,20 +41,23 @@ export class Board {
       return
     }
     this.currentFigure.drop()
-    this.currentBoardMatrix = this.addFigureToMatrix(this.currentFigure, this.boardMatrixSnapshot)
+    this.currentBoardMatrix = this.addFigureToBoard(this.currentFigure)
   }
 
   private createEmptyMatrix(rowsNumber:number, colsNumber:number):Matrix{
     return Array(rowsNumber).fill(Array(colsNumber).fill(null))
   }
 
-  private addFigureToMatrix(figure:Figure, matrix: Matrix ): Matrix{
-    const currentMatrix = matrix.map(row => [...row]);
+  private addFigureToBoard(figure: Figure): Matrix {
+    const currentMatrix = this.boardMatrixSnapshot.map(row => [...row]);
 
     for (let row = 0; row < figure.shape.length; row++) {
       for (let col = 0; col < figure.shape[0].length; col++) {
-        currentMatrix[figure.position.y + row][
-          figure.position.x + col
+        const iteratedCol = figure.position.x + col
+        const iteratedRow = figure.position.y + row
+
+        currentMatrix[iteratedRow][
+          iteratedCol
         ] = figure.shape[row][col]? 1: null;
 
       }
@@ -62,5 +65,4 @@ export class Board {
     
     return currentMatrix
   }
-  
 }

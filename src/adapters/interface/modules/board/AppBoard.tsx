@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Board, FigureConfig, Matrix } from "../../../../core/entities/board";
+import { Board, FigureConfig } from "../../../../core/entities/board";
 import "./appBoardStyle.scss";
+import { fakeFigure1 } from "./fakeData";
 
 export interface Size{
   height: number;
@@ -8,71 +9,56 @@ export interface Size{
 }
 
 export default function AppBoard(size: Size) {
-  const [tetrisBoard] = useState(new Board(size.height,size.width))
-  const [boardMatrix, setBoardMatrix] = useState(tetrisBoard.boardMatrix);
-  const [printedTetrisBoard, setPrintedTetrisBoard] = useState<JSX.Element[][]>()
+  const tetrisBoard = new Board(size.height, size.width)
+  const [boardMatrix, setBoardMatrix] = useState(tetrisBoard.boardMatrix)
 
   useEffect(() => {
-    console.log('useEffect')
     const timeoutId = setTimeout(()=>{
-      setFigure();
+      console.log('board before adding a figure: ',JSON.stringify(tetrisBoard.boardMatrix))
+      addFigure(fakeFigure1);
+      console.log('board after adding a figure: ',JSON.stringify(tetrisBoard.boardMatrix))
       setBoardMatrix(tetrisBoard.boardMatrix);
     }, 500);
 
     // Clean up the timeout if the component unmounts
     return () => clearTimeout(timeoutId);
   }, []); // Empty dependency array ensures this runs only once after the initial render
-
-  useEffect(() => {
-    console.log('tetrisBoard.boardMatrix triggered: ', tetrisBoard.boardMatrix)
-    setPrintedTetrisBoard(printBoardMatrix(boardMatrix))
-  }, [boardMatrix]); 
   
-  function printBoardMatrix(matrix:Matrix):JSX.Element[][]{
-    return matrix.map((rowValue, rowIndex) => {
-      return rowValue.map((colValue, colIndex) => {
-        return (
-          <div
-            className={`app-board-space${colValue ? " selected" : ""}`}
-            key={`${colIndex}${rowIndex}`}
-          ></div>
-        )
-      } );
-    });
-  }
-
-  function createFigure1(): FigureConfig{
-    return {
-      shape: [
-        [1, 0],
-        [1, 1],
-      ],
-      position: { y: 0, x: 1 },
-    };
-  }
-
-  function setFigure():void {
-    const figure1 = createFigure1()
-    tetrisBoard.setFigure(figure1)
+  function addFigure(figure:FigureConfig):void {
+    tetrisBoard.addFigure(figure)
     setDropFigure()
   }
 
   function setDropFigure(){
     setTimeout(() => {
       tetrisBoard.dropCurrentFigure()
-      console.log('figurePosition: ', tetrisBoard.figurePosition)
       
       setBoardMatrix(tetrisBoard.boardMatrix)
 
-      if(tetrisBoard.figurePosition && tetrisBoard.figurePosition.y < (size.height - 2)){
+      if(tetrisBoard.figurePosition && tetrisBoard.figurePosition.y < (size.height - fakeFigure1.shape.length)){
         setDropFigure()
+      }else{
+        // addFigure(fakeFigure1)
       }
     }, 500)
   }
-
+  
   return (
     <>
-      <div className="app-board">{printedTetrisBoard}</div>
+      <div className="app-board">
+        {
+          boardMatrix.map((rowValue, rowIndex) => {
+            return rowValue.map((colValue, colIndex) => {
+              return (
+                <div
+                  className={`app-board-space${colValue ? " selected" : ""}`}
+                  key={`${colIndex}${rowIndex}`}
+                ></div>
+              )
+            } );
+          })
+        }
+      </div>
     </>
   );
 }
