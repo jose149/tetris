@@ -14,6 +14,7 @@ export default function AppBoard(size: Size) {
   console.log('onCreate AppBoard')
   console.log('figureCount: ',figureCount)
   console.log('board: ',board)
+  console.log('check GitHub repository')
 
   console.log('figurePosition: ',board.figurePosition)
 
