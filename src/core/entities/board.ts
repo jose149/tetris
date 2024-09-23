@@ -9,7 +9,7 @@ export type Position = { x: number; y: number };
 
 export class Board {
   private currentBoardMatrix: Matrix;
-  private currentFigure?: Figure = undefined
+  public currentFigure?: Figure = undefined
   private boardMatrixSnapshot: Matrix;
 
   constructor(height: number, width: number) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Board, FigureConfig } from "../../../../core/entities/board";
 import "./appBoardStyle.scss";
 import { fakeFigure1 } from "./fakeData";
@@ -9,35 +9,53 @@ export interface Size{
 }
 
 export default function AppBoard(size: Size) {
-  const tetrisBoard = new Board(size.height, size.width)
-  const [boardMatrix, setBoardMatrix] = useState(tetrisBoard.boardMatrix)
+  const [board, setBoard] = useState(new Board(size.height, size.width))
+  const [figureCount, setFigureCount] = useState(0)
+  console.log('onCreate AppBoard')
+  console.log('figureCount: ',figureCount)
+  console.log('board: ',board)
 
-  useEffect(() => {
-    const timeoutId = setTimeout(()=>{
+  console.log('figurePosition: ',board.figurePosition)
+
+  if(!board.figurePosition){
+    console.log('onCreate setTimeout addFigure')
+    setTimeout(()=>{
+      setFigureCount(figureCount+1);
       addFigure(fakeFigure1);
     }, 500);
+  }else{
+    console.log('onCreate setTimeout drop: ', board.figurePosition.y < (size.height - fakeFigure1.shape.length))
+    if(board.figurePosition.y < (size.height - fakeFigure1.shape.length)){
+      setDropFigure()
+    }
+  }
 
-    // Clean up the timeout if the component unmounts
-    return () => clearTimeout(timeoutId);
-  }, []); // Empty dependency array ensures this runs only once after the initial render
+  // useEffect(() => {
+  //   console.log('useEffect')
+  //   const timeoutId = setTimeout(()=>{
+  //     console.log('useEffect setTimeout')
+  //     setFigureCount(figureCount+1);
+  //     addFigure(fakeFigure1);
+  //   }, 500);
+
+  //   // Clean up the timeout if the component unmounts
+  //   return () => clearTimeout(timeoutId);
+  // }, []); // Empty dependency array ensures this runs only once after the initial render
   
   function addFigure(figure:FigureConfig):void {
-    tetrisBoard.addFigure(figure)
-    setBoardMatrix(tetrisBoard.boardMatrix);
-    setDropFigure()
+    const currentBoard = board
+    console.log('addFigure')
+    currentBoard.addFigure(figure)
+    setBoard(currentBoard);
   }
 
   function setDropFigure(){
     setTimeout(() => {
-      tetrisBoard.dropCurrentFigure()
+      const currentBoard = board;
+      currentBoard.dropCurrentFigure();
+      console.log(currentBoard.figurePosition);
       
-      setBoardMatrix(tetrisBoard.boardMatrix)
-
-      if(tetrisBoard.figurePosition && tetrisBoard.figurePosition.y < (size.height - fakeFigure1.shape.length)){
-        setDropFigure()
-      }else{
-        addFigure(fakeFigure1)
-      }
+      setBoard(currentBoard);
     }, 500)
   }
   
@@ -45,7 +63,7 @@ export default function AppBoard(size: Size) {
     <>
       <div className="app-board">
         {
-          boardMatrix.map((rowValue, rowIndex) => {
+          board.boardMatrix.map((rowValue, rowIndex) => {
             return rowValue.map((colValue, colIndex) => {
               return (
                 <div

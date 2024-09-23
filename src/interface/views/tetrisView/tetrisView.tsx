@@ -2,6 +2,7 @@ import AppBoard from "../../../adapters/interface/modules/board/AppBoard";
 import "./tetrisStyles.scss";
 
 export default function TetrisView() {
+  console.log('onCreate TretrisView')
   return (
     <>
       <div className="tetris">
